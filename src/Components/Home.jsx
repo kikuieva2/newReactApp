@@ -1,5 +1,5 @@
 import React from "react";
-import WordList from "../components/WordList";
+import WordList from "../Components/WordList";
 import words from "../words.json";
 
 const Home = () => {

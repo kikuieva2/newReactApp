@@ -1,32 +1,43 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { WordsContext } from "./WordsContext";
 
-const WordCard = ({ word, onLearn }) => {
-  const [isTranslationVisible, setTranslationVisible] = useState(false);
-  const buttonRef = useRef(null);
+const WordCard = () => {
+  const { words, loading, error } = useContext(WordsContext);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
-  useEffect(() => {
-    setTranslationVisible(false); // Сбрасываем состояние перевода при смене карточки
-    if (buttonRef.current) {
-      buttonRef.current.focus(); // Устанавливаем фокус
+  const nextCard = () => {
+    if (currentWordIndex < words.length - 1) {
+      setCurrentWordIndex(currentWordIndex + 1);
+    } else {
+      setCurrentWordIndex(0); // Вернуться к первой карточке
     }
-  }, [word]);
-
-  const toggleTranslation = () => {
-    setTranslationVisible(true);
-    onLearn();
   };
+
+  const prevCard = () => {
+    if (currentWordIndex > 0) {
+      setCurrentWordIndex(currentWordIndex - 1);
+    } else {
+      setCurrentWordIndex(words.length - 1); // Перейти к последней карточке
+    }
+  };
+
+  const currentWord = words[currentWordIndex];
+
+  if (loading) return <div>Загрузка...</div>;
+  if (error) return <div>Ошибка: {error}</div>;
 
   return (
     <div>
-      <h3>{word.english}</h3>
-      <p>{word.transcription}</p>
-      {isTranslationVisible ? (
-        <p>{word.russian}</p>
-      ) : (
-        <button ref={buttonRef} onClick={toggleTranslation}>
-          Посмотреть перевод
-        </button>
-      )}
+      <h2>Карточка слова</h2>
+      <div>
+        <h3>{currentWord.english}</h3>
+        <p>{currentWord.transcription}</p>
+        <button>{currentWord.russian}</button>
+        <div>
+          <button onClick={prevCard}>Назад</button>
+          <button onClick={nextCard}>Вперед</button>
+        </div>
+      </div>
     </div>
   );
 };

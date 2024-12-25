@@ -1,21 +1,18 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import WordGame from "./pages/WordGame";
-import NotFound from "./pages/NotFound";
+import { WordsProvider } from "./WordsContext";
+import WordList from "./WordList"; // Твой компонент таблицы
+import WordCard from "./WordCard"; // Твой компонент карточки
 
-const App = () => {
+function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/game" element={<WordGame />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <WordsProvider>
+      <div className="App">
+        <h1>Словарь</h1>
+        <WordList />
+        <WordCard />
+      </div>
+    </WordsProvider>
   );
-};
+}
 
 export default App;

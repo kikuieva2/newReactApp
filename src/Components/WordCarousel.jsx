@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import WordCard from "./WordCard";
+import styles from "./WordCarousel.module.css";
 
 const WordCarousel = ({ words, initialIndex = 0 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
