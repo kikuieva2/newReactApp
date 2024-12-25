@@ -1,18 +1,17 @@
 import React from "react";
-import { WordsProvider } from "./WordsContext";
-import WordList from "./WordList"; // Твой компонент таблицы
-import WordCard from "./WordCard"; // Твой компонент карточки
+import WordList from "./WordList";
+import CardList from "./CardList";
+import AddWordForm from "./AddWordForm";
 
-function App() {
+const App = () => {
   return (
-    <WordsProvider>
-      <div className="App">
-        <h1>Словарь</h1>
-        <WordList />
-        <WordCard />
-      </div>
-    </WordsProvider>
+    <div>
+      <h1>Словарь</h1>
+      <AddWordForm />
+      <WordList />
+      <CardList />
+    </div>
   );
-}
+};
 
 export default App;

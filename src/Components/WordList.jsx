@@ -1,37 +1,43 @@
-import React, { useContext } from "react";
-import { WordsContext } from "./WordsContext";
 
-const WordList = () => {
-  const { words, loading, error, editWord, deleteWord } = useContext(WordsContext);
+import React, { useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import wordStore from "../store";  // Импортируем store
 
-  if (loading) return <div>Загрузка...</div>;
-  if (error) return <div>Ошибка: {error}</div>;
+const CardList = observer(() => {
+  const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
+
+  const showNextCard = () => {
+    if (currentWordIndex < wordStore.words.length - 1) {
+      setCurrentWordIndex(currentWordIndex + 1);
+    }
+  };
+
+  const showPrevCard = () => {
+    if (currentWordIndex > 0) {
+      setCurrentWordIndex(currentWordIndex - 1);
+    }
+  };
+
+  useEffect(() => {
+    // Можно установить фокус на кнопку "Показать перевод", если она есть
+  }, [currentWordIndex]);
+
+  const currentWord = wordStore.words[currentWordIndex];
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Слово</th>
-          <th>Транскрипция</th>
-          <th>Перевод</th>
-          <th>Действия</th>
-        </tr>
-      </thead>
-      <tbody>
-        {words.map((word) => (
-          <tr key={word.id}>
-            <td>{word.english}</td>
-            <td>{word.transcription}</td>
-            <td>{word.russian}</td>
-            <td>
-              <button onClick={() => editWord(word.id, { russian: "новый перевод" })}>Редактировать</button>
-              <button onClick={() => deleteWord(word.id)}>Удалить</button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      {currentWord ? (
+        <div>
+          <h2>{currentWord.english}</h2>
+          <button onClick={() => alert(currentWord.russian)}>Показать перевод</button>
+          <button onClick={showPrevCard}>Предыдущее</button>
+          <button onClick={showNextCard}>Следующее</button>
+        </div>
+      ) : (
+        <p>Слова не загружены или список пуст.</p>
+      )}
+    </div>
   );
-};
+});
 
-export default WordList;
+export default CardList;
