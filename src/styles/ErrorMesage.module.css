@@ -1,0 +1,22 @@
+.error-message {
+    color: red;
+    background-color: lightpink;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid red;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table th, table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  

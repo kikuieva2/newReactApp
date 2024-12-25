@@ -1,5 +1,5 @@
 import React from "react";
-import WordCarousel from "../components/WordCarousel";
+import WordCarousel from "../Components/WordCarousel";
 import words from "../words.json";
 
 const WordGame = () => {
